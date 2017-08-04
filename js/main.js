@@ -159,6 +159,7 @@ sgtSolution.onclick = function () {
         var helper = gen_heuristic(n);
         if (gen_solution(M, helper, n)) {
             printMatrix(M);
+            matrizGenerada(M);
             break;
         }
     }
@@ -173,7 +174,7 @@ sgtSolution.onclick = function () {
                 celda.setAttribute('class', 'negro');
             }
             var p = document.createElement('p');
-            //p.setAttribute("id",i);
+            p.setAttribute("id",i);
             p.innerHTML = M[i][j];
             celda.appendChild(p);
 
@@ -184,52 +185,80 @@ sgtSolution.onclick = function () {
     tablero.appendChild(tabla);
 }
 
-var index1 = 1;
+var index1 = 0;
 var matrizfinal = [];
 
 function matrizGenerada(M) {
     for (var i = 0; i < M.length; i++) {
         for (var j = 0; j < M.length; j++) {
             matrizfinal.push((M[i][j]));
-            console.log(matrizfinal);
+           console.log("matriz final" + matrizfinal);
         }
     }
 }
 
 bntPasoPaso.onclick = function () {
+    var arregloCeldas = [];
+    var n = parseInt(document.getElementById('lados').value);
+    celdas = document.getElementsByTagName("td");
+    console.log(celdas);
+    var p = document.createElement('p');
+
+
+    console.log("celdas " + celdas);
+    
+    //var position = arregloCeldas.indexOf(index1);
+   // console.log("posicion" + parseInt(position));
+    p.innerHTML = index1;
+    for(var i=0; i<celdas.length; i++){
+      arregloCeldas.push(celdas[i].textContent);
+      celdas[i].textContent = "";
+      
+      
+    }
+    
+     celdas[index1].appendChild(p); 
+    //console.log(position);
+    //console.log(celdas[position]);
+    //console.log(p);
+   // celdas[position].appendChild(p);
+
+    index1 ++;
+
+    if(index1 == n*n){
+        alert("EUREKA");
+        index1 = 0;
+    }
+    /*
+  
+    
+    
+    
+    
+    
+    
     
     tablero.innerHTML = '';
+    generarTabla();
     var tabla = document.createElement('table');
-    var DIV = document.getElementById("tablero");
     var p = document.createElement('p');
     var n = parseInt(document.getElementById('lados').value);
     tabla.border = "1";
-    
-    DIV.appendChild(p);
-
-    for (var i = 0; i < n; i++) {
-        var fila = document.createElement('tr');
-        for (var j = 0; j < n; j++) {
-            var celda = document.createElement('td');
-            if (i % 2 == 0 && j % 2 != 0 || i % 2 != 0 && j % 2 == 0) {
-                celda.setAttribute('class', 'negro');
-            }
-            var p = document.createElement('p');
-            var posicion = matrizfinal.indexOf(index1);
-            p.innerHTML = matrizfinal[posicion];
-             
-            celda.appendChild(p);
-
-            fila.appendChild(celda);
+   
+    for(var i=0; i<matrizfinal.length; i++){
+        for(var j=0; j<matrizfinal.length; j++){
+            console.log(p);
+            //var celda = document.getElementById(i);
+             valor =  matrizfinal.indexOf(index1);
+             p.innerHTML = matrizfinal[valor];
+             //celda.appendChild(p);
         }
-        tabla.appendChild(fila);
     }
-    tablero.appendChild(tabla);
 
     console.log(matrizfinal[index1]);
     index1++;
     if (index1 == n*n) {
         alert("EUREKA");
-    }
+    }*/
 }
            
