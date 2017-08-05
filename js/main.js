@@ -7,7 +7,7 @@ function printMatrix(M) {
     console.log("___________________");
     for (var i = 0; i < M.length; i++)
         console.log(M[i]);
-    matrizGenerada(M);
+    //matrizGenerada(M);
     console.log("___________________");
 }
 function check(i, j, n) {
@@ -124,6 +124,7 @@ function generarTabla() {
             break;
         }
     }
+    matrizGenerada(M);
 
     var tabla = document.createElement('table');
     tabla.border = "1";
@@ -134,10 +135,6 @@ function generarTabla() {
             if (i % 2 == 0 && j % 2 != 0 || i % 2 != 0 && j % 2 == 0) {
                 celda.setAttribute('class', 'negro');
             }
-            /*var p = document.createElement('p');
-            p.setAttribute("class","valores");
-            p.innerHTML = M[i][j];
-            celda.appendChild(p);*/
 
             fila.appendChild(celda);
         }
@@ -151,7 +148,7 @@ generar.onclick = function () {
 }
 
 sgtSolution.onclick = function () {
-     tablero.innerHTML = '';
+    tablero.innerHTML = '';
     var n = parseInt(document.getElementById('lados').value);
 
     for (var i = 0; i < 1000; i++) {
@@ -173,7 +170,7 @@ sgtSolution.onclick = function () {
                 celda.setAttribute('class', 'negro');
             }
             var p = document.createElement('p');
-            //p.setAttribute("id",i);
+            p.setAttribute("id", i);
             p.innerHTML = M[i][j];
             celda.appendChild(p);
 
@@ -185,28 +182,36 @@ sgtSolution.onclick = function () {
 }
 
 var index1 = 1;
-var matrizfinal = [];
+var ArrIndex = [];
+var matrixFinal = [];
 
-function matrizGenerada(M) {
+function matrizGenerada(M) { //guardamos el arreglo con la solucion en uno global
     for (var i = 0; i < M.length; i++) {
-        for (var j = 0; j < M.length; j++) {
-            matrizfinal.push((M[i][j]));
-            console.log(matrizfinal);
-        }
+        matrixFinal.push(M[i]);
     }
 }
 
 bntPasoPaso.onclick = function () {
-    
-    tablero.innerHTML = '';
-    var tabla = document.createElement('table');
-    var DIV = document.getElementById("tablero");
-    var p = document.createElement('p');
     var n = parseInt(document.getElementById('lados').value);
-    tabla.border = "1";
-    
-    DIV.appendChild(p);
+    var array = new Array(n);
+    tablero.innerHTML = '';
+    ArrIndex.push(index1); //creamos un arreglo con el contador
 
+    for (var i = 0; i < n; i++) {
+        array[i] = new Array(n); //creamos un nuevo arreglo donde guardaremos la posicion del elemento
+        for (var j = 0; j < n; j++) {
+            array[i][j] = ' ';
+            for (var k = 0; k < ArrIndex.length; k++) {
+                if (matrixFinal[i][j] == ArrIndex[k]) {
+                    array[i][j] = ArrIndex[k];
+                }
+            }
+        }
+    }
+
+    index1++;
+    var tabla = document.createElement('table');
+    tabla.border = "1";
     for (var i = 0; i < n; i++) {
         var fila = document.createElement('tr');
         for (var j = 0; j < n; j++) {
@@ -215,9 +220,7 @@ bntPasoPaso.onclick = function () {
                 celda.setAttribute('class', 'negro');
             }
             var p = document.createElement('p');
-            var posicion = matrizfinal.indexOf(index1);
-            p.innerHTML = matrizfinal[posicion];
-             
+            p.innerHTML = array[i][j]; //mostramos el arreglo creado
             celda.appendChild(p);
 
             fila.appendChild(celda);
@@ -226,10 +229,8 @@ bntPasoPaso.onclick = function () {
     }
     tablero.appendChild(tabla);
 
-    console.log(matrizfinal[index1]);
-    index1++;
-    if (index1 == n*n) {
-        alert("EUREKA");
+    if(index1 == (n*n)+2){
+        index1 =1;
+        alert("EUREKA!!!!");
     }
 }
-           
